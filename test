@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# this is to get input from user and ensure that the input falls within 1 to 10
+while true; do
+    echo "Please enter a number between 1 and 10: "
+    read NUM
+    if [[ $NUM -ge 1 && $NUM -le 10 ]]; then
+        break
+    else
+        echo "Invalid input. Please try again."
+    fi
+done
+# to reconfirm that the number chosen is what will be used for the multiplication table 
+echo "You have chosen multiplication table for $NUM"
+echo "Do you want a full table or partial table? (enter 'f' for full, 'p' for partial):"
+#looping over request until user gives valid input
+while true; do  
+    read RES
+    if [[ $RES = "f" ]]; then
+    # this allows the table to just run from 1 to 10 when the user picks full using list style loop
+        for i in {1..10}; do
+            echo "$NUM * $i = $((NUM * i))"
+        done
+        break
+    elif [[ $RES = "p" ]]; then
+    # this is when the user picks partial, so the range is gotten from the user based on starting and ending numbers 
+        echo "Enter the starting number (between 1 and 10): "
+        read NUM1
+        echo "Enter the ending number (between 1 and 10): "
+        read NUM2
+        # this condition is to check whether input from user is between 1 and 10 and also the second number is greater than the first number 
+        if [[ $NUM1 -ge 1 && $NUM1 -le 10 && $NUM2 -ge 1 && $NUM2 -le 10 && $NUM1 -le $NUM2 ]]; then
+            echo "The partial multiplication table for $NUM from $NUM1 to $NUM2:"
+            # a c-style for loop ranging from the user's first number and second number 
+            for ((i=NUM1; i<=NUM2; i++)); do
+            # generating the result of the multiplication
+                echo "$NUM * $i = $((NUM * i))"
+            done
+            break
+            
+        else
+            echo "Invalid range. Please enter valid numbers between 1 and 10."
+        fi
+        
+    else 
+        echo "Please enter 'f' or 'p'."
+    fi
+done
